@@ -1,6 +1,6 @@
-import "./App.css";
-import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
 import { useEffect, useState } from "react";
+import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
+import "./App.css";
 
 interface Font {
   name: string;
@@ -59,7 +59,36 @@ function App() {
           readOnly
         ></textarea>
       </label>
+      <CopyToClipboard copiableText={formattedText} />
     </div>
+  );
+}
+
+function CopyToClipboard({ copiableText }: { copiableText: string }) {
+  const [isCopied, setIsCopied] = useState(false);
+
+  const copyToClipboard = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 1000); // Reset copied state after 1 second
+    } catch (err) {
+      console.error("Failed to copy text: ", err);
+    }
+  };
+
+  return (
+    <button
+      disabled={isCopied}
+      className={`text-center transition-all duration-100 bg-blue-500 hover:bg-blue-700 text-white font-bold w-40 py-2 px-4 rounded ${
+        isCopied && "bg-slate-300  hover:bg-slate-300 text-green-800"
+      }`}
+      onClick={() => {
+        copyToClipboard(copiableText);
+      }}
+    >
+      {isCopied ? "Done! ✓" : " Copy text"}
+    </button>
   );
 }
 
