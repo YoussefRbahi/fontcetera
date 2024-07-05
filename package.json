@@ -8,9 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "convert-unicode-fonts": "^1.0.1",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "string-to-unicode-variant": "^1.0.9"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.14",

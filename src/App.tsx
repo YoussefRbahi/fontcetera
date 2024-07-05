@@ -1,13 +1,22 @@
 import "./App.css";
-import { transform, getFonts, revertTransform } from "convert-unicode-fonts";
-import { useState } from "react";
+import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
+import { useEffect, useState } from "react";
 
 function App() {
-  const fonts = getFonts();
+  interface MainFont {
+    name: string;
+    id: string;
+  }
+  const mainFonts: MainFont[] = [
+    { name: "bold", id: "b" },
+    { name: "italic", id: "i" },
+    { name: "boldItalic", id: "bi" },
+  ];
   const [formattedText, setFormattedText] = useState<string>("");
+  const [selectedFont, setSelectedFont] = useState<string>("b");
 
   const formatText = (text: string) => {
-    const newText = transform(text, fonts["bold"]);
+    const newText = toUnicodeVariant(text, selectedFont);
     setFormattedText(newText);
   };
 
