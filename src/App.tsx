@@ -83,14 +83,7 @@ function App() {
       </div>
       <div className="flex justify-between">
         <CopyToClipboard copiableText={formattedText} font={selectedFont} />
-        <a
-          href="https://rbahi.com"
-          target="_blank"
-          rel="noopener"
-          className="text-lg"
-        >
-          ⓘ
-        </a>
+        <ClearText setInputText={setInputText} />
       </div>
     </div>
   );
@@ -125,7 +118,30 @@ function CopyToClipboard({
         copyToClipboard(copiableText);
       }}
     >
-      {toUnicodeVariant(isCopied ? "✅ Done!" : "📋 Copy text", font)}
+      {/*toUnicodeVariant(*/ isCopied ? "✅ Done!" : "📋 Copy text" /*, font)*/}
+    </button>
+  );
+}
+function ClearText({ setInputText }: { setInputText: (text: string) => void }) {
+  const [isCleared, setIsCleared] = useState(false);
+
+  function clearText() {
+    setInputText("");
+    setIsCleared(true);
+    setTimeout(() => setIsCleared(false), 2000); // Reset cleared state after 2 seconds
+  }
+
+  return (
+    <button
+      disabled={isCleared}
+      className={`text-center transition-all duration-100 text-white font-bold w-28 py-2 px-4 rounded text-nowrap ${
+        isCleared
+          ? "bg-slate-300  hover:bg-slate-300 text-green-800"
+          : "bg-red-500 hover:bg-green-700"
+      }`}
+      onClick={() => clearText()}
+    >
+      {isCleared ? "✅ Cleared" : "🗑️ Clear"}
     </button>
   );
 }
