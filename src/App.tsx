@@ -13,19 +13,27 @@ function App() {
     { name: "Bold Italic", id: "bi" },
   ];
   const [inputText, setInputText] = useState<string>("");
-  const [formattedText, setFormattedText] = useState<string>("");
   const [selectedFont, setSelectedFont] = useState<string>("b");
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const formattedText = toUnicodeVariant(inputText, selectedFont);
 
   useEffect(() => {
-    setFormattedText(toUnicodeVariant(inputText, selectedFont));
-  }, [selectedFont, inputText]);
+    // Load data from storage when component mounts
+    chrome.storage.session.get(["inputText", "selectedFont"], (result) => {
+      if (result.inputText) setInputText(result.inputText);
+      if (result.selectedFont) setSelectedFont(result.selectedFont);
+    });
 
-  useEffect(() => {
+    // Focus the input when the component mounts
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
+
+  useEffect(() => {
+    // Save data to storage whenever it changes
+    chrome.storage.session.set({ inputText, selectedFont });
+  }, [inputText, selectedFont]);
 
   return (
     <div className="w-80 m-0 p-4 grid gap-4 text-sm">
@@ -38,9 +46,8 @@ function App() {
           id="input-textarea"
           ref={inputRef}
           className="border w-full h-20 px-2 py-0.5 resize-none"
-          onChange={(e) => {
-            setInputText(e.target.value);
-          }}
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
         ></textarea>
       </div>
 
