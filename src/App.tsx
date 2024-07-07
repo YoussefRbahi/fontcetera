@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
 import "./App.css";
 
@@ -15,13 +15,20 @@ function App() {
   const [inputText, setInputText] = useState<string>("");
   const [formattedText, setFormattedText] = useState<string>("");
   const [selectedFont, setSelectedFont] = useState<string>("b");
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     setFormattedText(toUnicodeVariant(inputText, selectedFont));
   }, [selectedFont, inputText]);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
   return (
-    <div className="w-80 m-0 rounded-full p-4 grid gap-4 text-sm">
+    <div className="w-80 m-0 p-4 grid gap-4 text-sm">
       <div className="grid gap-2">
         <label htmlFor="input-textarea" className="text-lg">
           Enter text:
@@ -29,6 +36,7 @@ function App() {
         <textarea
           name="userInput"
           id="input-textarea"
+          ref={inputRef}
           className="border w-full h-20 px-2 py-0.5 resize-none"
           onChange={(e) => {
             setInputText(e.target.value);
