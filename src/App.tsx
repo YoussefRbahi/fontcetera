@@ -16,13 +16,16 @@ function App() {
   const [selectedFont, setSelectedFont] = useState<string>("b");
   const formattedText = toUnicodeVariant(inputText, selectedFont);
 
+  // Load data from storage when component mounts
+
+  /*
   useEffect(() => {
-    // Load data from storage when component mounts
     chrome.storage.session.get(["inputText", "selectedFont"], (result) => {
       if (result.inputText) setInputText(result.inputText);
       if (result.selectedFont) setSelectedFont(result.selectedFont);
     });
   }, []);
+  */
 
   useEffect(() => {
     // Save data to storage whenever it changes
