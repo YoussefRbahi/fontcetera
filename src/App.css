@@ -1,0 +1,12 @@
+.text-area {
+  @apply border border-slate-400 w-full h-20 px-1 py-0.5 resize-none rounded;
+}
+.text-area:focus {
+  @apply border-slate-800;
+}
+.text-label {
+  @apply text-black text-base text-center;
+}
+.button {
+  @apply text-center transition-all duration-100 text-white font-semibold w-24 py-1 px-2 rounded text-nowrap;
+}

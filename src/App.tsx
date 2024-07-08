@@ -30,25 +30,37 @@ function App() {
   }, [inputText, selectedFont]);
 
   return (
-    <div className="w-80 m-0 p-4 grid gap-4 text-sm">
-      <div className="grid gap-2">
-        <label htmlFor="input-textarea" className="text-lg">
+    <div className=" w-64 m-0 p-2 grid gap-2 text-sm font-mono bg-slate">
+      <div className="grid gap-1">
+        <label htmlFor="input-textarea" className="text-label">
           Enter text:
         </label>
         <textarea
           name="userInput"
           id="input-textarea"
           autoFocus
-          className="border w-full h-20 px-2 py-0.5 resize-none"
+          className="text-area"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
         ></textarea>
       </div>
 
+      <div className="grid gap-1">
+        <label htmlFor="output-textarea" className="text-label">
+          Formatted Text:
+        </label>
+        <textarea
+          name="userOutput"
+          id="output-textarea"
+          className="text-area"
+          value={formattedText}
+          readOnly
+        ></textarea>
+      </div>
       {/* Radio buttons to select font */}
-      <div className="flex gap-2">
+      <div className="flex gap-2 justify-center">
         {fonts.map((font) => (
-          <div key={font.id} className="flex gap-2">
+          <div key={font.id} className="flex gap-0.5">
             <input
               type="radio"
               id={font.id}
@@ -63,19 +75,7 @@ function App() {
           </div>
         ))}
       </div>
-      <div className="grid gap-2">
-        <label htmlFor="output-textarea" className="text-lg">
-          Formatted Text:
-        </label>
-        <textarea
-          name="userOutput"
-          id="output-textarea"
-          className="border w-full h-20 px-2 py-0.5 resize-none"
-          value={formattedText}
-          readOnly
-        ></textarea>
-      </div>
-      <div className="flex justify-between">
+      <div className="flex justify-around mb-2 ">
         <CopyToClipboard copiableText={formattedText} font={selectedFont} />
         <ClearText setInputText={setInputText} />
       </div>
@@ -96,7 +96,7 @@ function CopyToClipboard({
     try {
       await navigator.clipboard.writeText(text);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset copied state after 2 seconds
+      setTimeout(() => setIsCopied(false), 1500); // Reset copied state after 1.5 seconds
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }
@@ -105,14 +105,14 @@ function CopyToClipboard({
   return (
     <button
       disabled={isCopied}
-      className={`text-center transition-all duration-100 bg-blue-500 hover:bg-blue-700 text-white font-bold w-32 py-2 px-4 rounded text-nowrap ${
+      className={`button bg-blue-500 hover:bg-blue-700  ${
         isCopied && "bg-slate-300  hover:bg-slate-300 text-green-800"
       }`}
       onClick={() => {
         copyToClipboard(copiableText);
       }}
     >
-      {/*toUnicodeVariant(*/ isCopied ? "✅ Done!" : "📋 Copy text" /*, font)*/}
+      {/*toUnicodeVariant(*/ isCopied ? "✅ Copied" : "📋 Copy" /*, font)*/}
     </button>
   );
 }
@@ -122,16 +122,16 @@ function ClearText({ setInputText }: { setInputText: (text: string) => void }) {
   function clearText() {
     setInputText("");
     setIsCleared(true);
-    setTimeout(() => setIsCleared(false), 2000); // Reset cleared state after 2 seconds
+    setTimeout(() => setIsCleared(false), 1500); // Reset cleared state after 1.5 seconds
   }
 
   return (
     <button
       disabled={isCleared}
-      className={`text-center transition-all duration-100 text-white font-bold w-28 py-2 px-4 rounded text-nowrap ${
+      className={`button ${
         isCleared
           ? "bg-slate-300  hover:bg-slate-300 text-green-800"
-          : "bg-red-500 hover:bg-green-700"
+          : "bg-red-500 hover:bg-red-700"
       }`}
       onClick={() => clearText()}
     >
