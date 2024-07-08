@@ -6,19 +6,34 @@ import Logo from "./logo.svg";
 interface Font {
   name: string;
   id: string;
+  canBold: boolean;
+  canItalic: boolean;
 }
+
 function App() {
   const fonts: Font[] = [
-    { name: "Bold", id: "b" },
-    { name: "Italic", id: "i" },
-    { name: "Bold/italic", id: "bi" },
+    // { name: "Bold", id: "b" },
+    // { name: "Italic", id: "i" },
+    // { name: "Bold/italic", id: "bi" },
+    { name: "Gothic", id: "g", canBold: true, canItalic: false },
+    { name: "Script", id: "c", canBold: true, canItalic: false },
+    { name: "Double-struck", id: "d", canBold: false, canItalic: false },
+    { name: "Sans-serif", id: "s", canBold: true, canItalic: true },
+    { name: "Monospace", id: "m", canBold: false, canItalic: false },
+    { name: "Full width", id: "w", canBold: false, canItalic: false },
   ];
+
   const [inputText, setInputText] = useState<string>("");
-  const [selectedFont, setSelectedFont] = useState<string>("b");
-  const formattedText = toUnicodeVariant(inputText, selectedFont);
+  const [selectedFont, setSelectedFont] = useState<Font | null>(null);
+  const [isBold, setIsBold] = useState<boolean>(true);
+  const [isItalic, setIsItalic] = useState<boolean>(true);
+
+  const formattedText = toUnicodeVariant(
+    inputText,
+    (isBold ? "b" : "") + (isItalic ? "i" : "") + selectedFont?.id
+  );
 
   // Load data from storage when component mounts
-
   /*
   useEffect(() => {
     chrome.storage.session.get(["inputText", "selectedFont"], (result) => {
@@ -69,24 +84,47 @@ function App() {
             readOnly
           ></textarea>
         </div>
-        {/* Radio buttons to select font */}
-        <div className="flex my-2 ms-1 gap-2 ">
-          {fonts.map((font) => (
-            <div key={font.id} className="flex gap-0.5">
-              <input
-                type="radio"
-                id={font.id}
-                name="selected-font"
-                value={font.id}
-                checked={selectedFont === font.id}
-                onChange={() => setSelectedFont(font.id)}
-                className="accent-emerald-600 active:accent-emerald-800 "
-              />
-              <label htmlFor={font.id} className="text-slate-600 text-sm">
+        <div className="flex flex-wrap my-2 gap-2 font-bold">
+          <select
+            className="border-2 border-slate-300 rounded-md p-1 w-full"
+            title="Font selection"
+            value={selectedFont?.id || ""}
+            onChange={(e) => {
+              const font = fonts.find((f) => f.id === e.target.value);
+              setSelectedFont(font || null);
+              setIsBold(false);
+              setIsItalic(false);
+            }}
+          >
+            {fonts.map((font) => (
+              <option value={font.id} key={font.id}>
                 {toUnicodeVariant(font.name, font.id)}
-              </label>
-            </div>
-          ))}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex flex-wrap my-2 gap-2 font-bold">
+          <label htmlFor="bold">B</label>
+          <input
+            type="checkbox"
+            title="Bold"
+            id="bold"
+            disabled={!selectedFont?.canBold}
+            checked={isBold}
+            onChange={() => setIsBold(!isBold)}
+            className="accent-emerald-600 active:accent-emerald-800 "
+          />
+          <label htmlFor="Italic">I</label>
+
+          <input
+            type="checkbox"
+            title="Italic"
+            id="italic"
+            disabled={!selectedFont?.canItalic}
+            checked={isItalic}
+            onChange={() => setIsItalic(!isItalic)}
+            className="accent-emerald-600 active:accent-emerald-800 "
+          />
         </div>
       </div>
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
