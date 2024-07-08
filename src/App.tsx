@@ -10,7 +10,7 @@ function App() {
   const fonts: Font[] = [
     { name: "Bold", id: "b" },
     { name: "Italic", id: "i" },
-    { name: "Bold Italic", id: "bi" },
+    { name: "Bold/italic", id: "bi" },
   ];
   const [inputText, setInputText] = useState<string>("");
   const [selectedFont, setSelectedFont] = useState<string>("b");
@@ -33,7 +33,7 @@ function App() {
   }, [inputText, selectedFont]);
 
   return (
-    <div className=" w-64 m-0 p-2 grid gap-2 text-sm font-mono bg-slate">
+    <div className="w-64 m-0 p-2 grid gap-2 text-sm font-mono bg-slate-100 text-slate-800">
       <div className="grid gap-1">
         <label htmlFor="input-textarea" className="text-label">
           Enter text:
@@ -50,7 +50,7 @@ function App() {
 
       <div className="grid gap-1">
         <label htmlFor="output-textarea" className="text-label">
-          Formatted Text:
+          Formatted text:
         </label>
         <textarea
           name="userOutput"
@@ -71,6 +71,7 @@ function App() {
               value={font.id}
               checked={selectedFont === font.id}
               onChange={() => setSelectedFont(font.id)}
+              className="accent-emerald-600 active:accent-emerald-800"
             />
             <label htmlFor={font.id}>
               {toUnicodeVariant(font.name, font.id)}
@@ -78,7 +79,7 @@ function App() {
           </div>
         ))}
       </div>
-      <div className="flex justify-around mb-2 ">
+      <div className="flex justify-around mb-2">
         <CopyToClipboard copiableText={formattedText} font={selectedFont} />
         <ClearText setInputText={setInputText} />
       </div>
@@ -108,8 +109,10 @@ function CopyToClipboard({
   return (
     <button
       disabled={isCopied}
-      className={`button bg-blue-500 hover:bg-blue-700  ${
-        isCopied && "bg-slate-300  hover:bg-slate-300 text-green-800"
+      className={`button ${
+        isCopied
+          ? "bg-slate-300  hover:bg-slate-300 text-emerald-800"
+          : "bg-emerald-600 hover:bg-emerald-800"
       }`}
       onClick={() => {
         copyToClipboard(copiableText);
@@ -133,8 +136,8 @@ function ClearText({ setInputText }: { setInputText: (text: string) => void }) {
       disabled={isCleared}
       className={`button ${
         isCleared
-          ? "bg-slate-300  hover:bg-slate-300 text-green-800"
-          : "bg-red-500 hover:bg-red-700"
+          ? "bg-slate-300  hover:bg-slate-300 text-emerald-800"
+          : "bg-slate-500 hover:bg-slate-700"
       }`}
       onClick={() => clearText()}
     >
