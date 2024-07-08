@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
 import "./App.css";
 
@@ -14,7 +14,6 @@ function App() {
   ];
   const [inputText, setInputText] = useState<string>("");
   const [selectedFont, setSelectedFont] = useState<string>("b");
-  const inputRef = useRef<HTMLTextAreaElement>(null);
   const formattedText = toUnicodeVariant(inputText, selectedFont);
 
   useEffect(() => {
@@ -23,11 +22,6 @@ function App() {
       if (result.inputText) setInputText(result.inputText);
       if (result.selectedFont) setSelectedFont(result.selectedFont);
     });
-
-    // Focus the input when the component mounts
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
   }, []);
 
   useEffect(() => {
@@ -44,7 +38,7 @@ function App() {
         <textarea
           name="userInput"
           id="input-textarea"
-          ref={inputRef}
+          autoFocus
           className="border w-full h-20 px-2 py-0.5 resize-none"
           value={inputText}
           onChange={(e) => setInputText(e.target.value)}
