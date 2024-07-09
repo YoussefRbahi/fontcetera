@@ -217,7 +217,7 @@ function App() {
       </div>
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
         <div className="flex w-2/3 gap-2 ">
-          <CopyToClipboard copiableText={formattedText} font={selectedFont} />
+          <CopyToClipboard copiableText={formattedText} />
           <ClearText setInputText={setInputText} />
         </div>
       </div>
@@ -225,13 +225,7 @@ function App() {
   );
 }
 
-function CopyToClipboard({
-  copiableText,
-  font,
-}: {
-  copiableText: string;
-  font: string;
-}) {
+function CopyToClipboard({ copiableText }: { copiableText: string }) {
   const [isCopied, setIsCopied] = useState(false);
 
   const copyToClipboard = async (text: string) => {
