@@ -154,31 +154,32 @@ function App() {
         </div>
         <div className="flex my-2 gap-2">
           <div className="flex gap-1">
-            <button
-              disabled={!selectedFont?.canBold}
+            <OptionButton
+              letter="B"
+              enableState={selectedFont?.canBold || false}
+              isApplied={isBold}
               onClick={() => setIsBold(!isBold)}
-              className={`option-button font-bold ${
-                isBold ? "bg-emerald-600 text-white" : "text-black"
+              className="font-black"
+              spanClass={`${
+                isBold
+                  ? "text-white drop-shadow-[1px_1px_0px_#FFFFFF] "
+                  : "text-black drop-shadow-[1px_1px_0px_#000000] "
               }`}
-            >
-              <span className="block">B</span>
-            </button>
-            <button
-              disabled={!selectedFont?.canItalic}
+            />
+            <OptionButton
+              letter="I"
+              enableState={selectedFont?.canItalic || false}
+              isApplied={isItalic}
               onClick={() => setIsItalic(!isItalic)}
-              className={`option-button font-extralight  ${
-                isItalic && "bg-emerald-600 text-white"
-              }`}
-            >
-              <span className="block italic">I</span>
-            </button>
+              className="italic"
+            />
           </div>
           <span className="bg-slate-300 w-[1px] "></span>
           <div className="flex gap-1">
             <OptionButton
               letter="U"
               enableState={selectedFont?.canDecorate || false}
-              isDecorated={decorations.isUnderlined}
+              isApplied={decorations.isUnderlined}
               onClick={() =>
                 setDecorations({
                   ...decorations,
@@ -190,7 +191,7 @@ function App() {
             <OptionButton
               letter="S"
               enableState={selectedFont?.canDecorate || false}
-              isDecorated={decorations.isStriked}
+              isApplied={decorations.isStriked}
               onClick={() =>
                 setDecorations({
                   ...decorations,
@@ -202,7 +203,7 @@ function App() {
             <OptionButton
               letter="O"
               enableState={selectedFont?.canDecorate || false}
-              isDecorated={decorations.isOverlined}
+              isApplied={decorations.isOverlined}
               onClick={() =>
                 setDecorations({
                   ...decorations,
@@ -281,14 +282,14 @@ function ClearText({ setInputText }: { setInputText: (text: string) => void }) {
 function OptionButton({
   letter,
   enableState,
-  isDecorated,
+  isApplied,
   onClick,
   className,
   spanClass,
 }: {
   letter: string;
   enableState: boolean;
-  isDecorated: boolean;
+  isApplied?: boolean;
   onClick: () => void;
   className: string;
   spanClass?: string;
@@ -298,7 +299,7 @@ function OptionButton({
       disabled={!enableState}
       onClick={onClick}
       className={`option-button font-extralight ${
-        isDecorated ? "bg-emerald-600 text-white" : ""
+        isApplied ? "bg-emerald-600 text-white" : ""
       } ${className}`}
     >
       <span
