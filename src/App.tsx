@@ -108,27 +108,22 @@ function App() {
           </select>
         </div>
         <div className="flex flex-wrap my-2 gap-2 font-bold">
-          <label htmlFor="bold">B</label>
-          <input
-            type="checkbox"
-            title="Bold"
-            id="bold"
+          <button
             disabled={!selectedFont?.canBold}
-            checked={isBold}
-            onChange={() => setIsBold(!isBold)}
-            className="accent-emerald-600 active:accent-emerald-800 "
-          />
-          <label htmlFor="Italic">I</label>
-
-          <input
-            type="checkbox"
-            title="Italic"
-            id="italic"
+            onClick={() => setIsBold(!isBold)}
+            className={`option-button ${isBold && "bg-emerald-600 text-white"}`}
+          >
+            <span className="block">B</span>
+          </button>
+          <button
             disabled={!selectedFont?.canItalic}
-            checked={isItalic}
-            onChange={() => setIsItalic(!isItalic)}
-            className="accent-emerald-600 active:accent-emerald-800 "
-          />
+            onClick={() => setIsItalic(!isItalic)}
+            className={`option-button  ${
+              isItalic && "bg-emerald-600 text-white"
+            }`}
+          >
+            <span className="block">I</span>
+          </button>
         </div>
       </div>
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
