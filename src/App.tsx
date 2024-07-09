@@ -24,9 +24,9 @@ function App() {
   ];
 
   const [inputText, setInputText] = useState<string>("");
-  const [selectedFont, setSelectedFont] = useState<Font | null>(null);
-  const [isBold, setIsBold] = useState<boolean>(true);
-  const [isItalic, setIsItalic] = useState<boolean>(true);
+  const [selectedFont, setSelectedFont] = useState<Font | null>(fonts[0]);
+  const [isBold, setIsBold] = useState<boolean>(false);
+  const [isItalic, setIsItalic] = useState<boolean>(false);
 
   const formattedText = toUnicodeVariant(
     inputText,
