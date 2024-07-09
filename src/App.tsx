@@ -17,6 +17,13 @@ function App() {
     // { name: "Italic", id: "i" },
     // { name: "Bold/italic", id: "bi" },
     {
+      name: "Sans-serif",
+      id: "s",
+      canBold: true,
+      canItalic: true,
+      canDecorate: true,
+    },
+    {
       name: "Gothic",
       id: "g",
       canBold: true,
@@ -35,13 +42,6 @@ function App() {
       id: "d",
       canBold: false,
       canItalic: false,
-      canDecorate: true,
-    },
-    {
-      name: "Sans-serif",
-      id: "s",
-      canBold: true,
-      canItalic: true,
       canDecorate: true,
     },
     {
