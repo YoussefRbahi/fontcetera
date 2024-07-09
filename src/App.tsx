@@ -72,12 +72,16 @@ function App() {
 
   const formattedText = toUnicodeVariant(
     inputText,
-    (isBold ? "b" : "") + (isItalic ? "i" : "") + selectedFont?.id,
-    selectedFont?.canDecorate && [
-      decorations.isUnderlined ? "u" : "",
-      decorations.isStriked ? "s" : "",
-      decorations.isOverlined ? "o" : "",
-    ]
+    (selectedFont?.canBold ? (isBold ? "b" : "") : "") +
+      (selectedFont?.canItalic ? (isItalic ? "i" : "") : "") +
+      selectedFont?.id,
+    selectedFont?.canDecorate
+      ? [
+          decorations.isUnderlined ? "u" : "",
+          decorations.isStriked ? "s" : "",
+          decorations.isOverlined ? "o" : "",
+        ]
+      : ""
   );
 
   // Load data from storage when component mounts
@@ -139,12 +143,6 @@ function App() {
             onChange={(e) => {
               const font = fonts.find((f) => f.id === e.target.value);
               setSelectedFont(font || null);
-              if (!font?.canBold) {
-                setIsBold(false);
-              }
-              if (!font?.canItalic) {
-                setIsItalic(false);
-              }
             }}
           >
             {fonts.map((font) => (
