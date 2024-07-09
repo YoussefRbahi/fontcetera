@@ -84,9 +84,9 @@ function App() {
             readOnly
           ></textarea>
         </div>
-        <div className="flex flex-wrap my-2 gap-2 font-bold">
+        <div className="flex my-2 gap-2 text-base h-auto">
           <select
-            className="border-2 border-slate-300 rounded-md p-1 w-full"
+            className="border-2 border-slate-300 rounded-md h-8 w-full"
             title="Font selection"
             value={selectedFont?.id || ""}
             onChange={(e) => {
@@ -107,22 +107,24 @@ function App() {
             ))}
           </select>
         </div>
-        <div className="flex flex-wrap my-2 gap-2 font-bold">
+        <div className="flex flex-wrap my-2 gap-1">
           <button
             disabled={!selectedFont?.canBold}
             onClick={() => setIsBold(!isBold)}
-            className={`option-button ${isBold && "bg-emerald-600 text-white"}`}
+            className={`option-button font-bold ${
+              isBold ? "bg-emerald-600 text-white" : "text-black"
+            }`}
           >
             <span className="block">B</span>
           </button>
           <button
             disabled={!selectedFont?.canItalic}
             onClick={() => setIsItalic(!isItalic)}
-            className={`option-button  ${
+            className={`option-button font-extralight  ${
               isItalic && "bg-emerald-600 text-white"
             }`}
           >
-            <span className="block">I</span>
+            <span className="block italic">I</span>
           </button>
         </div>
       </div>
