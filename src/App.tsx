@@ -8,6 +8,7 @@ interface Font {
   id: string;
   canBold: boolean;
   canItalic: boolean;
+  canDecorate: boolean;
 }
 
 function App() {
@@ -15,22 +16,68 @@ function App() {
     // { name: "Bold", id: "b" },
     // { name: "Italic", id: "i" },
     // { name: "Bold/italic", id: "bi" },
-    { name: "Gothic", id: "g", canBold: true, canItalic: false },
-    { name: "Script", id: "c", canBold: true, canItalic: false },
-    { name: "Double-struck", id: "d", canBold: false, canItalic: false },
-    { name: "Sans-serif", id: "s", canBold: true, canItalic: true },
-    { name: "Monospace", id: "m", canBold: false, canItalic: false },
-    { name: "Full width", id: "w", canBold: false, canItalic: false },
+    {
+      name: "Gothic",
+      id: "g",
+      canBold: true,
+      canItalic: false,
+      canDecorate: true,
+    },
+    {
+      name: "Script",
+      id: "c",
+      canBold: true,
+      canItalic: false,
+      canDecorate: true,
+    },
+    {
+      name: "Double-struck",
+      id: "d",
+      canBold: false,
+      canItalic: false,
+      canDecorate: true,
+    },
+    {
+      name: "Sans-serif",
+      id: "s",
+      canBold: true,
+      canItalic: true,
+      canDecorate: true,
+    },
+    {
+      name: "Monospace",
+      id: "m",
+      canBold: false,
+      canItalic: false,
+      canDecorate: true,
+    },
+    {
+      name: "Full width",
+      id: "w",
+      canBold: false,
+      canItalic: false,
+      canDecorate: false,
+    },
   ];
 
   const [inputText, setInputText] = useState<string>("");
   const [selectedFont, setSelectedFont] = useState<Font | null>(fonts[0]);
   const [isBold, setIsBold] = useState<boolean>(false);
   const [isItalic, setIsItalic] = useState<boolean>(false);
+  const [decorations, setDecorations] = useState({
+    isUnderlined: true,
+    isStriked: false,
+    isOverlined: false,
+  });
 
   const formattedText = toUnicodeVariant(
     inputText,
-    (isBold ? "b" : "") + (isItalic ? "i" : "") + selectedFont?.id
+    (isBold ? "b" : "") + (isItalic ? "i" : "") + selectedFont?.id,
+    selectedFont?.canDecorate && [
+      decorations.isUnderlined ? "u" : "",
+      decorations.isStriked ? "s" : "",
+      decorations.isOverlined ? "o" : "",
+    ]
   );
 
   // Load data from storage when component mounts
@@ -107,25 +154,67 @@ function App() {
             ))}
           </select>
         </div>
-        <div className="flex flex-wrap my-2 gap-1">
-          <button
-            disabled={!selectedFont?.canBold}
-            onClick={() => setIsBold(!isBold)}
-            className={`option-button font-bold ${
-              isBold ? "bg-emerald-600 text-white" : "text-black"
-            }`}
-          >
-            <span className="block">B</span>
-          </button>
-          <button
-            disabled={!selectedFont?.canItalic}
-            onClick={() => setIsItalic(!isItalic)}
-            className={`option-button font-extralight  ${
-              isItalic && "bg-emerald-600 text-white"
-            }`}
-          >
-            <span className="block italic">I</span>
-          </button>
+        <div className="flex my-2 gap-2">
+          <div className="flex gap-1">
+            <button
+              disabled={!selectedFont?.canBold}
+              onClick={() => setIsBold(!isBold)}
+              className={`option-button font-bold ${
+                isBold ? "bg-emerald-600 text-white" : "text-black"
+              }`}
+            >
+              <span className="block">B</span>
+            </button>
+            <button
+              disabled={!selectedFont?.canItalic}
+              onClick={() => setIsItalic(!isItalic)}
+              className={`option-button font-extralight  ${
+                isItalic && "bg-emerald-600 text-white"
+              }`}
+            >
+              <span className="block italic">I</span>
+            </button>
+          </div>
+          <span className="bg-slate-300 w-[1px] "></span>
+          <div className="flex gap-1">
+            <OptionButton
+              letter="U"
+              enableState={selectedFont?.canDecorate || false}
+              isDecorated={decorations.isUnderlined}
+              onClick={() =>
+                setDecorations({
+                  ...decorations,
+                  isUnderlined: !decorations.isUnderlined,
+                })
+              }
+              className="underline"
+            />
+            <OptionButton
+              letter="S"
+              enableState={selectedFont?.canDecorate || false}
+              isDecorated={decorations.isStriked}
+              onClick={() =>
+                setDecorations({
+                  ...decorations,
+                  isStriked: !decorations.isStriked,
+                })
+              }
+              className="line-through"
+            />
+            <OptionButton
+              letter="O"
+              enableState={selectedFont?.canDecorate || false}
+              isDecorated={decorations.isOverlined}
+              onClick={() =>
+                setDecorations({
+                  ...decorations,
+                  isOverlined: !decorations.isOverlined,
+                })
+              }
+              className="border-current"
+              spanClass="border-inherit border-t-2 "
+            />
+          </div>
         </div>
       </div>
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
@@ -193,6 +282,38 @@ function ClearText({ setInputText }: { setInputText: (text: string) => void }) {
       onClick={() => clearText()}
     >
       {isCleared ? "Cleared" : "Clear"}
+    </button>
+  );
+}
+
+function OptionButton({
+  letter,
+  enableState,
+  isDecorated,
+  onClick,
+  className,
+  spanClass,
+}: {
+  letter: string;
+  enableState: boolean;
+  isDecorated: boolean;
+  onClick: () => void;
+  className: string;
+  spanClass?: string;
+}) {
+  return (
+    <button
+      disabled={!enableState}
+      onClick={onClick}
+      className={`option-button font-extralight ${
+        isDecorated ? "bg-emerald-600 text-white" : ""
+      } ${className}`}
+    >
+      <span
+        className={`inline-block leading-none ${spanClass ? spanClass : ""}`}
+      >
+        {letter}
+      </span>
     </button>
   );
 }
