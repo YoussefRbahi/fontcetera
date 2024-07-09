@@ -92,8 +92,12 @@ function App() {
             onChange={(e) => {
               const font = fonts.find((f) => f.id === e.target.value);
               setSelectedFont(font || null);
-              setIsBold(false);
-              setIsItalic(false);
+              if (!font?.canBold) {
+                setIsBold(false);
+              }
+              if (!font?.canItalic) {
+                setIsItalic(false);
+              }
             }}
           >
             {fonts.map((font) => (
