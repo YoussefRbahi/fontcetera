@@ -270,19 +270,15 @@ function ClearText({
   inputText: string;
   setInputText: (text: string) => void;
 }) {
-  const [isCleared, setIsCleared] = useState(false);
-
   function clearText() {
     setInputText("");
-    setIsCleared(true);
-    setTimeout(() => setIsCleared(false), 3000); // Reset cleared state after 3 seconds
   }
 
   return (
     <button
-      disabled={isCleared || inputText === ""}
+      disabled={inputText === ""}
       className={`button text-slate-500 ${
-        isCleared || inputText === "" ? "" : "hover:bg-red-800 hover:text-white"
+        inputText === "" ? "" : "hover:bg-red-800 hover:text-white"
       }`}
       onClick={() => clearText()}
     >
