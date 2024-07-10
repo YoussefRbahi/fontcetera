@@ -168,10 +168,12 @@ function App() {
               isApplied={isBold}
               onClick={() => setIsBold(!isBold)}
               className="font-black"
-              spanClass={`${
-                isBold
-                  ? "text-white drop-shadow-[1px_1px_0px_#FFFFFF] "
-                  : "text-black drop-shadow-[1px_1px_0px_#000000] "
+              spanClass={`-translate-y-[1px] ${
+                selectedFont?.canBold
+                  ? isBold
+                    ? "text-white drop-shadow-[1px_1px_0px_#FFFFFF] "
+                    : "text-black drop-shadow-[1px_1px_0px_#000000] "
+                  : "drop-shadow-[1px_1px_0px_#cbd5e1] "
               }`}
             />
             <OptionButton
