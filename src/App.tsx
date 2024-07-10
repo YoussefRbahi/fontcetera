@@ -13,9 +13,13 @@ interface Font {
 
 function App() {
   const fonts: Font[] = [
-    // { name: "Bold", id: "b" },
-    // { name: "Italic", id: "i" },
-    // { name: "Bold/italic", id: "bi" },
+    {
+      name: "Serif",
+      id: "",
+      canBold: true,
+      canItalic: true,
+      canDecorate: true,
+    },
     {
       name: "Sans-serif",
       id: "s",
