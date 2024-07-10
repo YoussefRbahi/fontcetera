@@ -227,7 +227,7 @@ function App() {
         </div>
       </div>
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
-        <div className="flex w-2/3 gap-2 ">
+        <div className="flex w-2/3 gap-1 ">
           <CopyToClipboard copiableText={formattedText} />
           <ClearText setInputText={setInputText} />
         </div>
@@ -252,10 +252,8 @@ function CopyToClipboard({ copiableText }: { copiableText: string }) {
   return (
     <button
       disabled={isCopied}
-      className={`button ${
-        isCopied
-          ? "bg-slate-300  hover:bg-slate-300 text-emerald-800"
-          : "bg-emerald-600 hover:bg-emerald-800"
+      className={`button text-emerald-600 ${
+        isCopied ? "" : " hover:bg-slate-300"
       }`}
       onClick={() => {
         copyToClipboard(copiableText);

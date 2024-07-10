@@ -12,7 +12,7 @@
   @apply text-slate-600 text-base mt-2;
 }
 .button {
-  @apply text-center outline-offset-1 transition-all duration-100 text-slate-50 font-semibold h-full w-full py-1 px-2 rounded text-nowrap;
+  @apply text-center outline-offset-1 transition-all duration-200 font-semibold h-full w-16 min-w-20 max-w-20 py-1 px-2 rounded text-nowrap;
 }
 .option-button {
   @apply flex text-lg h-6 aspect-square rounded items-center justify-center text-slate-600;
