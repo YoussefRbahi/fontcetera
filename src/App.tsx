@@ -122,7 +122,7 @@ function App() {
     setIsCopied(false);
   }, [inputText, selectedFont, isBold, isItalic, decorations]);
   return (
-    <div className="w-64 m-0 bg-white grid  text-sm font-mono bg-gradient-to-br from-sky-50  to-amber-50 text-slate-800">
+    <div className="w-64 m-0 bg-white grid  text-sm font-mono bg-gradient-to-br from-sky-50  to-amber-50 text-slate-600">
       <div className="flex items-center tracking-normal px-4 py-2 border-b border-slate-300 gap-0.5">
         <img
           src={Logo}
@@ -306,7 +306,7 @@ function ClearText({
   return (
     <button
       disabled={inputText === ""}
-      className={`button text-slate-500 ${
+      className={`button ${
         inputText === "" ? "" : "hover:bg-red-800 hover:text-white"
       }`}
       onClick={() => clearText()}

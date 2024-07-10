@@ -1,12 +1,12 @@
 * {
-  @apply outline-emerald-700 selection:bg-emerald-700 selection:text-slate-50 border-slate-300 select-none;
+  @apply outline-emerald-600 selection:bg-emerald-600 selection:text-slate-50 border-slate-300 select-none;
 }
 
 .text-area {
-  @apply bg-white border-2 border-slate-300 outline-none w-full h-16 px-1 py-0.5 resize-none rounded select-text;
+  @apply bg-white border-2 text-slate-800 border-slate-300 outline-none w-full h-16 px-1 py-0.5 resize-none rounded select-text;
 }
 .text-area:focus {
-  @apply outline-none outline border-emerald-700;
+  @apply outline-none outline border-emerald-600;
 }
 .text-label {
   @apply text-slate-600 text-base mt-2;
