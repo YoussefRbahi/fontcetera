@@ -73,6 +73,7 @@ function App() {
     isStriked: false,
     isOverlined: false,
   });
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const formattedText = toUnicodeVariant(
     inputText,
@@ -103,6 +104,23 @@ function App() {
     chrome.storage.session.set({ inputText, selectedFont });
   }, [inputText, selectedFont]);
 
+  useEffect(() => {
+    let timerId: number | null = null;
+
+    if (isCopied) {
+      timerId = setTimeout(() => setIsCopied(false), 2000);
+    }
+
+    return () => {
+      if (timerId !== null) {
+        clearTimeout(timerId);
+      }
+    };
+  }, [isCopied]);
+
+  useEffect(() => {
+    setIsCopied(false);
+  }, [inputText, selectedFont, isBold, isItalic, decorations]);
   return (
     <div className="w-64 m-0 bg-white grid  text-sm font-mono bg-gradient-to-br from-sky-50  to-amber-50 text-slate-800">
       <div className="flex items-center tracking-normal px-4 py-2 border-b border-slate-300 gap-0.5">
@@ -228,7 +246,11 @@ function App() {
       </div>
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
         <div className="flex w-2/3 gap-1 ">
-          <CopyToClipboard copiableText={formattedText} />
+          <CopyToClipboard
+            copiableText={formattedText}
+            isCopied={isCopied}
+            setIsCopied={setIsCopied}
+          />
           <ClearText inputText={inputText} setInputText={setInputText} />
         </div>
       </div>
@@ -236,14 +258,19 @@ function App() {
   );
 }
 
-function CopyToClipboard({ copiableText }: { copiableText: string }) {
-  const [isCopied, setIsCopied] = useState(false);
-
+function CopyToClipboard({
+  copiableText,
+  isCopied,
+  setIsCopied,
+}: {
+  copiableText: string;
+  isCopied: boolean;
+  setIsCopied: (isCopied: boolean) => void;
+}) {
   const copyToClipboard = async (text: string) => {
     try {
       await navigator.clipboard.writeText(text);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 1500); // Reset copied state after 1.5 seconds
     } catch (err) {
       console.error("Failed to copy text: ", err);
     }
@@ -252,14 +279,16 @@ function CopyToClipboard({ copiableText }: { copiableText: string }) {
   return (
     <button
       disabled={isCopied}
-      className={`button text-emerald-600 ${
-        isCopied ? "" : " hover:bg-slate-300"
+      className={`button  text-white ${
+        isCopied
+          ? "disabled:text-emerald-600 disabled:bg-transparent  "
+          : " hover:bg-emerald-800 disabled:hover:bg-emerald-600 disabled:text-white bg-emerald-600 disabled:opacity-30"
       }`}
       onClick={() => {
         copyToClipboard(copiableText);
       }}
     >
-      {/*toUnicodeVariant(*/ isCopied ? "Copied" : "Copy" /*, font)*/}
+      {isCopied ? "Copied" : "Copy"}
     </button>
   );
 }
