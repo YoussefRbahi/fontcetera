@@ -101,9 +101,13 @@ function App() {
 
   return (
     <div className="w-64 m-0 bg-white grid  text-sm font-mono bg-gradient-to-bl from-yellow-50  to-blue-50 text-slate-800">
-      <div className="flex items-end px-4 py-2 border-b border-slate-300 gap-0">
-        <img src={Logo} alt="Logo" className="w-auto h-8" />
-        <h1 className="font-bold text-lg font-serif tracking-widest text-emerald-600 -mb-0.5 -translate-x-1.5">
+      <div className="flex items-center tracking-widest px-4 py-2 border-b border-slate-300 gap-1">
+        <img
+          src={Logo}
+          alt="Logo"
+          className="w-auto h-8  drop-shadow-[2px_1px_1px_grey]"
+        />
+        <h1 className="inline-block leading-none text-2xl translate font-serif font-black drop-shadow-[1px_1px_0px_#d4b900] text-emerald-600 translate-y-0.5">
           ontcetera
         </h1>
       </div>
