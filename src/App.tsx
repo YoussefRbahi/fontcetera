@@ -69,7 +69,7 @@ function App() {
   const [isBold, setIsBold] = useState<boolean>(false);
   const [isItalic, setIsItalic] = useState<boolean>(false);
   const [decorations, setDecorations] = useState({
-    isUnderlined: true,
+    isUnderlined: false,
     isStriked: false,
     isOverlined: false,
   });
