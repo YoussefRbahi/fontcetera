@@ -229,7 +229,7 @@ function App() {
       <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
         <div className="flex w-2/3 gap-1 ">
           <CopyToClipboard copiableText={formattedText} />
-          <ClearText setInputText={setInputText} />
+          <ClearText inputText={inputText} setInputText={setInputText} />
         </div>
       </div>
     </div>
@@ -263,26 +263,30 @@ function CopyToClipboard({ copiableText }: { copiableText: string }) {
     </button>
   );
 }
-function ClearText({ setInputText }: { setInputText: (text: string) => void }) {
+function ClearText({
+  inputText,
+  setInputText,
+}: {
+  inputText: string;
+  setInputText: (text: string) => void;
+}) {
   const [isCleared, setIsCleared] = useState(false);
 
   function clearText() {
     setInputText("");
     setIsCleared(true);
-    setTimeout(() => setIsCleared(false), 1500); // Reset cleared state after 1.5 seconds
+    setTimeout(() => setIsCleared(false), 3000); // Reset cleared state after 3 seconds
   }
 
   return (
     <button
-      disabled={isCleared}
-      className={`button ${
-        isCleared
-          ? "bg-slate-300  hover:bg-slate-300 text-emerald-800"
-          : "bg-slate-500 hover:bg-slate-700"
+      disabled={isCleared || inputText === ""}
+      className={`button text-slate-500 ${
+        isCleared || inputText === "" ? "" : "hover:bg-red-800 hover:text-white"
       }`}
       onClick={() => clearText()}
     >
-      {isCleared ? "Cleared" : "Clear"}
+      Clear
     </button>
   );
 }
