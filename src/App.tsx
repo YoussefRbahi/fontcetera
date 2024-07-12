@@ -77,7 +77,6 @@ function App() {
   });
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isMoreOptions, setIsMoreOptions] = useState<boolean>(false);
-  // const [saveText, setSaveText] = useState(false);
 
   const formattedText = toUnicodeVariant(
     inputText,
@@ -96,49 +95,6 @@ function App() {
   const toggleMoreOptions = () => {
     setIsMoreOptions(!isMoreOptions);
   };
-
-  // // Load data from storage when component mounts
-  // useEffect(() => {
-  //   chrome.storage.local.get("saveText", (result) => {
-  //     if (result.saveText !== undefined) {
-  //       setSaveText(result.saveText);
-  //       console.log("Loaded saveText:", result.saveText);
-  //     } else {
-  //       console.log("No saveText found in storage, using default value");
-  //     }
-  //   });
-
-  //   chrome.storage.local.get(["inputText", "selectedFont"], (result) => {
-  //     if (result.inputText) {
-  //       setInputText(result.inputText);
-  //       console.log("Loaded input text:", result.inputText);
-  //     } else {
-  //       console.log("No input text found in local storage");
-  //     }
-
-  //     if (result.selectedFont) {
-  //       setSelectedFont(result.selectedFont);
-  //       console.log("Loaded selected font:", result.selectedFont);
-  //     } else {
-  //       console.log("No selected font found in local storage");
-  //     }
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   chrome.storage.local.get("saveText", (result) => {
-  //     if (result.saveText !== saveText) {
-  //       chrome.storage.local.set({ saveText }, () => {
-  //         console.log("Saved settings to local storage:", saveText);
-  //       });
-  //     }
-  //   });
-  // }, [saveText]);
-
-  // useEffect(() => {
-  //   // Save text and font selection to local storage whenever they changes
-  //   chrome.storage.local.set({ inputText, selectedFont });
-  // }, [inputText, selectedFont]);
 
   useEffect(() => {
     let timerId: number | null = null;
@@ -428,52 +384,6 @@ function MoreOptions({}) {
           Fontcetera allows you to easily format your text with various Unicode
           fonts and styles.
         </p>
-      </div>
-      <div className=" hidden flex-col">
-        <h2 className="text-label tracking-widest mt-4">Settings</h2>
-        {/* <ul className="flex flex-col w-3/4 ">
-          <li className="flex justify-between items-center">
-            <label htmlFor="save">Save input:</label>
-            <div className="block">
-              {/* <button
-                onClick={() => setSaveText(true)}
-                className={`px-2 py-1 rounded ${
-                  saveText
-                    ? "bg-emerald-600 text-white"
-                    : "bg-gray-200 text-gray-600"
-                }`}
-              >
-                yes
-              </button>
-              |
-              <button
-                onClick={() => setSaveText(false)}
-                className={`px-2 py-1 rounded ${
-                  !saveText
-                    ? "bg-emerald-600 text-white"
-                    : "bg-gray-200 text-gray-600"
-                }`}
-              >
-                no
-              </button>
-            </div>
-          </li>
-          <li className="flex justify-between items-center">
-            <label htmlFor="dark">Dark mode :</label>
-            {/* <input
-              title="Dark mode"
-              id="dark"
-              type="checkbox"
-              checked={settings.darkMode}
-              onChange={() =>
-                setSettings({ ...settings, darkMode: !settings.darkMode })
-              }
-            /> 
-            <span className="block text-xs translate-x-1/3 tracking-tighter text-slate-600">
-              Coming soon
-            </span>
-          </li>
-        </ul> */}
       </div>
       <div className="relative flex flex-col">
         <h2 className="text-label tracking-widest text-emerald-600 mt-4">
