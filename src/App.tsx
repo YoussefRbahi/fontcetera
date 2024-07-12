@@ -2,10 +2,8 @@ import { useEffect, useState } from "react";
 import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
 import "./App.css";
 import Logo from "./logo.svg";
-import House from "./images/house-solid.svg";
-import Bars from "./images/bars-solid.svg";
-import Sliders from "./images/sliders-h-solid.svg";
-import Angles from "./images/angle-double-right-solid.svg";
+import House from "./images/house-solid.svg?react";
+import Circle from "./images/circle-info-solid.svg?react";
 
 interface Font {
   name: string;
@@ -304,13 +302,18 @@ function App() {
             />
             <ClearText inputText={inputText} setInputText={setInputText} />
           </div>
+          <img src="./images/house-solid" alt="" />
           <button
-            className="button"
+            className=""
             onClick={() => {
               toggleMoreOptions();
             }}
           >
-            {isMoreOptions ? "Close" : "More"}
+            {isMoreOptions ? (
+              <House className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-y-0.5" />
+            ) : (
+              <Circle className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-x-0.5" />
+            )}
           </button>
         </div>
       </div>
@@ -475,7 +478,7 @@ function MoreOptions({}) {
         </ol>
       </div>
 
-      <div className="absolute bottom-0 text-[0.8rem]">
+      <div className="absolute bottom-1 text-[0.8rem]">
         <span>Created by </span>
         <a
           href="https://rbahi.com"
