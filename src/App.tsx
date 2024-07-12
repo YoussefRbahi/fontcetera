@@ -256,11 +256,7 @@ function App() {
             </div>
           </div>
           {isMoreOptions && (
-            <MoreOptions
-              toggleMoreOptions={toggleMoreOptions}
-              settings={settings}
-              setSettings={setSettings}
-            />
+            <MoreOptions settings={settings} setSettings={setSettings} />
           )}
         </div>
 
