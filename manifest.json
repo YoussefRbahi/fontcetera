@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Fontecetera - Type in Style, Everywhere",
+  "name": "Fontecetera - Unicode Text Formatter",
   "short_name": "Fontecetera",
   "description": "Fontecetera is a browser extension that allows you to use custom fonts on any website.",
   "author": {
