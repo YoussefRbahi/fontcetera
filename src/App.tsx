@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { string_to_unicode_variant as toUnicodeVariant } from "string-to-unicode-variant";
 import "./App.css";
 import Logo from "./logo.svg";
+import House from "./images/house-solid.svg";
+import Bars from "./images/bars-solid.svg";
+import Sliders from "./images/sliders-h-solid.svg";
+import Angles from "./images/angle-double-right-solid.svg";
 
 interface Font {
   name: string;
@@ -75,10 +79,7 @@ function App() {
   });
   const [isCopied, setIsCopied] = useState<boolean>(false);
   const [isMoreOptions, setIsMoreOptions] = useState<boolean>(false);
-  const [settings, setSettings] = useState({
-    saveText: false,
-    darkMode: false,
-  });
+  // const [saveText, setSaveText] = useState(false);
 
   const formattedText = toUnicodeVariant(
     inputText,
@@ -93,24 +94,53 @@ function App() {
         ]
       : ""
   );
+
   const toggleMoreOptions = () => {
     setIsMoreOptions(!isMoreOptions);
   };
 
-  // Load data from storage when component mounts
-  /*
-  useEffect(() => {
-    chrome.storage.session.get(["inputText", "selectedFont"], (result) => {
-      if (result.inputText) setInputText(result.inputText);
-      if (result.selectedFont) setSelectedFont(result.selectedFont);
-    });
-  }, []);
-  */
+  // // Load data from storage when component mounts
+  // useEffect(() => {
+  //   chrome.storage.local.get("saveText", (result) => {
+  //     if (result.saveText !== undefined) {
+  //       setSaveText(result.saveText);
+  //       console.log("Loaded saveText:", result.saveText);
+  //     } else {
+  //       console.log("No saveText found in storage, using default value");
+  //     }
+  //   });
 
-  useEffect(() => {
-    // Save data to storage whenever it changes
-    chrome.storage.session.set({ inputText, selectedFont });
-  }, [inputText, selectedFont]);
+  //   chrome.storage.local.get(["inputText", "selectedFont"], (result) => {
+  //     if (result.inputText) {
+  //       setInputText(result.inputText);
+  //       console.log("Loaded input text:", result.inputText);
+  //     } else {
+  //       console.log("No input text found in local storage");
+  //     }
+
+  //     if (result.selectedFont) {
+  //       setSelectedFont(result.selectedFont);
+  //       console.log("Loaded selected font:", result.selectedFont);
+  //     } else {
+  //       console.log("No selected font found in local storage");
+  //     }
+  //   });
+  // }, []);
+
+  // useEffect(() => {
+  //   chrome.storage.local.get("saveText", (result) => {
+  //     if (result.saveText !== saveText) {
+  //       chrome.storage.local.set({ saveText }, () => {
+  //         console.log("Saved settings to local storage:", saveText);
+  //       });
+  //     }
+  //   });
+  // }, [saveText]);
+
+  // useEffect(() => {
+  //   // Save text and font selection to local storage whenever they changes
+  //   chrome.storage.local.set({ inputText, selectedFont });
+  // }, [inputText, selectedFont]);
 
   useEffect(() => {
     let timerId: number | null = null;
@@ -255,9 +285,7 @@ function App() {
               </div>
             </div>
           </div>
-          {isMoreOptions && (
-            <MoreOptions settings={settings} setSettings={setSettings} />
-          )}
+          {isMoreOptions && <MoreOptions />}
         </div>
 
         <div className="flex relative py-2 border-t border-slate-300 px-4  align-middle justify-between">
@@ -380,37 +408,44 @@ function OptionButton({
   );
 }
 
-function MoreOptions({
-  settings,
-  setSettings,
-}: {
-  settings: any;
-  setSettings: (settings: any) => void;
-}) {
+function MoreOptions({}) {
   return (
-    <div className="block absolute h-full w-full justify-between px-4 top-0 left-0">
+    <div className="flex flex-col gap-0 justify-start absolute h-full w-full px-4 top-0 left-0">
       <div className="">
-        <h3 className="text-label tracking-widest">About</h3>
-        <p className="">
+        <h3 className="text-label tracking-widest text-emerald-600">About</h3>
+        <p className="text-[0.8rem]">
           Fontcetera allows you to easily format your text with various Unicode
           fonts and styles.
         </p>
       </div>
-      <div className="relative flex flex-col">
+      <div className=" hidden flex-col">
         <h2 className="text-label tracking-widest mt-4">Settings</h2>
         <ul className="flex flex-col w-3/4 ">
           <li className="flex justify-between items-center">
             <label htmlFor="save">Save input:</label>
-            <input
-              title="Save input"
-              id="save"
-              type="checkbox"
-              checked={settings.saveText}
-              onChange={() =>
-                setSettings({ ...settings, saveText: !settings.saveText })
-              }
-              className="accent-emerald-600"
-            />
+            <div className="block">
+              {/* <button
+                onClick={() => setSaveText(true)}
+                className={`px-2 py-1 rounded ${
+                  saveText
+                    ? "bg-emerald-600 text-white"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+              >
+                yes
+              </button>
+              |
+              <button
+                onClick={() => setSaveText(false)}
+                className={`px-2 py-1 rounded ${
+                  !saveText
+                    ? "bg-emerald-600 text-white"
+                    : "bg-gray-200 text-gray-600"
+                }`}
+              >
+                no
+              </button> */}
+            </div>
           </li>
           <li className="flex justify-between items-center">
             <label htmlFor="dark">Dark mode :</label>
@@ -429,21 +464,27 @@ function MoreOptions({
           </li>
         </ul>
       </div>
+      <div className="relative flex flex-col">
+        <h2 className="text-label tracking-widest text-emerald-600 mt-2">
+          How It Works
+        </h2>
+        <ol className="list-decimal list-inside text-[0.8rem] leading-4">
+          <li>Enter your text in the input field</li>
+          <li>Select a font style from the dropdown menu </li>
+          <li>Copy the formatted text to use it elsewhere</li>
+        </ol>
+      </div>
 
-      <div className="absolute bottom-0">
-        <ul className="text-[0.8rem] flex ">
-          <li className="justify-end">
-            <span>Created by </span>
-            <a
-              href="https://rbahi.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-emerald-600 hover:underline"
-            >
-              Youssef Rbahi
-            </a>
-          </li>
-        </ul>
+      <div className="absolute bottom-0 text-[0.8rem]">
+        <span>Created by </span>
+        <a
+          href="https://rbahi.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-emerald-600 hover:underline font-bold"
+        >
+          Youssef Rbahi
+        </a>
       </div>
     </div>
   );
