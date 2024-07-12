@@ -315,15 +315,9 @@ function App() {
             }}
           >
             {isMoreOptions ? (
-              <House
-                className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-y-0.5"
-                alt="Home"
-              />
+              <House className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-y-0.5" />
             ) : (
-              <Circle
-                className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-x-0.5"
-                alt="More"
-              />
+              <Circle className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-x-0.5" />
             )}
           </button>
         </div>
