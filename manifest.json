@@ -23,6 +23,5 @@
     "48": "public/icons/icon-48.png",
     "96": "public/icons/icon-96.png",
     "128": "public/icons/icon-128.png"
-  },
-  "permissions": ["storage"]
+  }
 }
