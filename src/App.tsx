@@ -220,6 +220,7 @@ function App() {
             <div className="flex my-2 gap-2">
               <div className="flex gap-1">
                 <OptionButton
+                  title="Bold"
                   letter="B"
                   enableState={selectedFont?.canBold || false}
                   isApplied={isBold}
@@ -234,6 +235,7 @@ function App() {
                   }`}
                 />
                 <OptionButton
+                  title="Italic"
                   letter="I"
                   enableState={selectedFont?.canItalic || false}
                   isApplied={isItalic}
@@ -244,6 +246,7 @@ function App() {
               <span className="bg-slate-300 w-[1px] "></span>
               <div className="flex gap-1">
                 <OptionButton
+                  title="Underline"
                   letter="U"
                   enableState={selectedFont?.canDecorate || false}
                   isApplied={decorations.isUnderlined}
@@ -256,6 +259,7 @@ function App() {
                   className="underline"
                 />
                 <OptionButton
+                  title="Strikethrough"
                   letter="S"
                   enableState={selectedFont?.canDecorate || false}
                   isApplied={decorations.isStriked}
@@ -268,6 +272,7 @@ function App() {
                   className="line-through"
                 />
                 <OptionButton
+                  title="Overline"
                   letter="O"
                   enableState={selectedFont?.canDecorate || false}
                   isApplied={decorations.isOverlined}
@@ -302,17 +307,23 @@ function App() {
             />
             <ClearText inputText={inputText} setInputText={setInputText} />
           </div>
-          <img src="./images/house-solid" alt="" />
           <button
             className=""
+            title={isMoreOptions ? "Home" : "More"}
             onClick={() => {
               toggleMoreOptions();
             }}
           >
             {isMoreOptions ? (
-              <House className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-y-0.5" />
+              <House
+                className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-y-0.5"
+                alt="Home"
+              />
             ) : (
-              <Circle className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-x-0.5" />
+              <Circle
+                className="fill-emerald-600 hover:fill-emerald-800 h-6 -translate-x-0.5"
+                alt="More"
+              />
             )}
           </button>
         </div>
@@ -380,6 +391,7 @@ function ClearText({
 }
 
 function OptionButton({
+  title,
   letter,
   enableState,
   isApplied,
@@ -387,6 +399,7 @@ function OptionButton({
   className,
   spanClass,
 }: {
+  title?: string;
   letter: string;
   enableState: boolean;
   isApplied?: boolean;
@@ -396,6 +409,7 @@ function OptionButton({
 }) {
   return (
     <button
+      title={title}
       disabled={!enableState}
       onClick={onClick}
       className={`option-button font-extralight ${
@@ -468,13 +482,13 @@ function MoreOptions({}) {
         </ul> */}
       </div>
       <div className="relative flex flex-col">
-        <h2 className="text-label tracking-widest text-emerald-600 mt-2">
-          How It Works
+        <h2 className="text-label tracking-widest text-emerald-600 mt-4">
+          How to use
         </h2>
-        <ol className="list-decimal list-inside text-[0.8rem] leading-4">
-          <li>Enter your text in the input field</li>
-          <li>Select a font style from the dropdown menu </li>
-          <li>Copy the formatted text to use it elsewhere</li>
+        <ol className="list-decimal list-inside text-[0.8rem] leading-4 flex flex-col gap-1">
+          <li>Enter text in the input field</li>
+          <li>Select the font and styles</li>
+          <li>Copy the formatted text and use it elsewhere</li>
         </ol>
       </div>
 
