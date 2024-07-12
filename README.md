@@ -1,6 +1,6 @@
 ![Fontcetera Banner](banner.png)
 
-# Fontcetera - Chrome Extension
+# Fontcetera - Uniform Text Formatter
 
 Fontcetera is a Chrome extension that allows you to easily format your text with various Unicode fonts and styles.
 
