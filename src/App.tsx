@@ -74,6 +74,11 @@ function App() {
     isOverlined: false,
   });
   const [isCopied, setIsCopied] = useState<boolean>(false);
+  const [isMoreOptions, setIsMoreOptions] = useState<boolean>(false);
+  const [settings, setSettings] = useState({
+    saveText: false,
+    darkMode: false,
+  });
 
   const formattedText = toUnicodeVariant(
     inputText,
@@ -88,6 +93,9 @@ function App() {
         ]
       : ""
   );
+  const toggleMoreOptions = () => {
+    setIsMoreOptions(!isMoreOptions);
+  };
 
   // Load data from storage when component mounts
   /*
@@ -123,135 +131,163 @@ function App() {
   }, [inputText, selectedFont, isBold, isItalic, decorations]);
   return (
     <div className="w-64 m-0 bg-white grid  text-sm font-mono bg-gradient-to-br from-sky-50  to-amber-50 text-slate-600">
-      <div className="flex items-center tracking-normal px-4 py-2 border-b border-slate-300 gap-0.5">
-        <img
-          src={Logo}
-          alt="Logo"
-          className="w-auto h-8  drop-shadow-[2px_1px_1px_grey]"
-        />
-        <h1 className="inline-block leading-none text-2xl translate font-serif font-black drop-shadow-[1px_1px_0.5px_grey] text-emerald-600 translate-y-0.5">
-          ontcetera
-        </h1>
-      </div>
-
-      <div className="px-4">
-        <div className="grid gap-1">
-          <label htmlFor="input-textarea" className="text-label">
-            Enter text:
-          </label>
-          <textarea
-            name="userInput"
-            id="input-textarea"
-            autoFocus
-            className="text-area"
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-          ></textarea>
+      <div>
+        <div className="flex items-center tracking-normal px-4 py-2 border-b border-slate-300 gap-0.5">
+          <img
+            src={Logo}
+            alt="Logo"
+            className="w-auto h-8  drop-shadow-[2px_1px_1px_grey]"
+          />
+          <h1 className="inline-block leading-none text-2xl translate font-serif font-black drop-shadow-[1px_1px_0.5px_grey] text-emerald-600 translate-y-0.5">
+            ontcetera
+          </h1>
         </div>
 
-        <div className="grid gap-1">
-          <label htmlFor="output-textarea" className="text-label">
-            Formatted text:
-          </label>
-          <textarea
-            name="userOutput"
-            id="output-textarea"
-            className="text-area"
-            value={formattedText}
-            readOnly
-          ></textarea>
+        <div className={` relative px-4`}>
+          <div className={`${isMoreOptions && "invisible"}`}>
+            <div className={`grid gap-1 ${isMoreOptions && "invisible"}`}>
+              <label htmlFor="input-textarea" className="text-label">
+                Enter text:
+              </label>
+              <textarea
+                name="userInput"
+                id="input-textarea"
+                autoFocus
+                className="text-area"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              ></textarea>
+            </div>
+
+            <div className="grid gap-1">
+              <label htmlFor="output-textarea" className="text-label">
+                Formatted text:
+              </label>
+              <textarea
+                name="userOutput"
+                id="output-textarea"
+                className="text-area"
+                value={formattedText}
+                readOnly
+              ></textarea>
+            </div>
+            <div className="flex my-2 gap-2 text-base h-auto">
+              <select
+                className="border-2 border-slate-300 rounded-md h-8 w-full"
+                title="Font selection"
+                value={selectedFont?.id || ""}
+                onChange={(e) => {
+                  const font = fonts.find((f) => f.id === e.target.value);
+                  setSelectedFont(font || null);
+                }}
+              >
+                {fonts.map((font) => (
+                  <option value={font.id} key={font.id}>
+                    {toUnicodeVariant(font.name, font.id)}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex my-2 gap-2">
+              <div className="flex gap-1">
+                <OptionButton
+                  letter="B"
+                  enableState={selectedFont?.canBold || false}
+                  isApplied={isBold}
+                  onClick={() => setIsBold(!isBold)}
+                  className="font-black"
+                  spanClass={`-translate-y-[1px] ${
+                    selectedFont?.canBold
+                      ? isBold
+                        ? "text-white drop-shadow-[1px_1px_0px_#FFFFFF] "
+                        : "text-black drop-shadow-[1px_1px_0px_#000000] "
+                      : "drop-shadow-[1px_1px_0px_#cbd5e1] "
+                  }`}
+                />
+                <OptionButton
+                  letter="I"
+                  enableState={selectedFont?.canItalic || false}
+                  isApplied={isItalic}
+                  onClick={() => setIsItalic(!isItalic)}
+                  className="italic"
+                />
+              </div>
+              <span className="bg-slate-300 w-[1px] "></span>
+              <div className="flex gap-1">
+                <OptionButton
+                  letter="U"
+                  enableState={selectedFont?.canDecorate || false}
+                  isApplied={decorations.isUnderlined}
+                  onClick={() =>
+                    setDecorations({
+                      ...decorations,
+                      isUnderlined: !decorations.isUnderlined,
+                    })
+                  }
+                  className="underline"
+                />
+                <OptionButton
+                  letter="S"
+                  enableState={selectedFont?.canDecorate || false}
+                  isApplied={decorations.isStriked}
+                  onClick={() =>
+                    setDecorations({
+                      ...decorations,
+                      isStriked: !decorations.isStriked,
+                    })
+                  }
+                  className="line-through"
+                />
+                <OptionButton
+                  letter="O"
+                  enableState={selectedFont?.canDecorate || false}
+                  isApplied={decorations.isOverlined}
+                  onClick={() =>
+                    setDecorations({
+                      ...decorations,
+                      isOverlined: !decorations.isOverlined,
+                    })
+                  }
+                  className="border-current"
+                  spanClass="border-inherit border-t-2 "
+                />
+              </div>
+            </div>
+          </div>
+          {isMoreOptions && (
+            <MoreOptions
+              toggleMoreOptions={toggleMoreOptions}
+              settings={settings}
+              setSettings={setSettings}
+            />
+          )}
         </div>
-        <div className="flex my-2 gap-2 text-base h-auto">
-          <select
-            className="border-2 border-slate-300 rounded-md h-8 w-full"
-            title="Font selection"
-            value={selectedFont?.id || ""}
-            onChange={(e) => {
-              const font = fonts.find((f) => f.id === e.target.value);
-              setSelectedFont(font || null);
+
+        <div className="flex relative py-2 border-t border-slate-300 px-4  align-middle justify-between">
+          <span
+            className={`absolute button text-[0.8rem] px-0 font-light ${
+              !isMoreOptions && "invisible"
+            }`}
+          >
+            Version 1.0.0
+          </span>
+          <div className={`flex w-2/3 gap-1 ${isMoreOptions && "invisible"}`}>
+            <CopyToClipboard
+              copiableText={formattedText}
+              isCopied={isCopied}
+              setIsCopied={setIsCopied}
+            />
+            <ClearText inputText={inputText} setInputText={setInputText} />
+          </div>
+          <button
+            className="button"
+            onClick={() => {
+              toggleMoreOptions();
             }}
           >
-            {fonts.map((font) => (
-              <option value={font.id} key={font.id}>
-                {toUnicodeVariant(font.name, font.id)}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex my-2 gap-2">
-          <div className="flex gap-1">
-            <OptionButton
-              letter="B"
-              enableState={selectedFont?.canBold || false}
-              isApplied={isBold}
-              onClick={() => setIsBold(!isBold)}
-              className="font-black"
-              spanClass={`-translate-y-[1px] ${
-                selectedFont?.canBold
-                  ? isBold
-                    ? "text-white drop-shadow-[1px_1px_0px_#FFFFFF] "
-                    : "text-black drop-shadow-[1px_1px_0px_#000000] "
-                  : "drop-shadow-[1px_1px_0px_#cbd5e1] "
-              }`}
-            />
-            <OptionButton
-              letter="I"
-              enableState={selectedFont?.canItalic || false}
-              isApplied={isItalic}
-              onClick={() => setIsItalic(!isItalic)}
-              className="italic"
-            />
-          </div>
-          <span className="bg-slate-300 w-[1px] "></span>
-          <div className="flex gap-1">
-            <OptionButton
-              letter="U"
-              enableState={selectedFont?.canDecorate || false}
-              isApplied={decorations.isUnderlined}
-              onClick={() =>
-                setDecorations({
-                  ...decorations,
-                  isUnderlined: !decorations.isUnderlined,
-                })
-              }
-              className="underline"
-            />
-            <OptionButton
-              letter="S"
-              enableState={selectedFont?.canDecorate || false}
-              isApplied={decorations.isStriked}
-              onClick={() =>
-                setDecorations({
-                  ...decorations,
-                  isStriked: !decorations.isStriked,
-                })
-              }
-              className="line-through"
-            />
-            <OptionButton
-              letter="O"
-              enableState={selectedFont?.canDecorate || false}
-              isApplied={decorations.isOverlined}
-              onClick={() =>
-                setDecorations({
-                  ...decorations,
-                  isOverlined: !decorations.isOverlined,
-                })
-              }
-              className="border-current"
-              spanClass="border-inherit border-t-2 "
-            />
-          </div>
-        </div>
-      </div>
-      <div className="flex py-2 border-t border-slate-300 px-4  align-middle justify-between">
-        <div className="flex w-2/3 gap-1 ">
-          <CopyToClipboard
-            copiableText={formattedText}
-            isCopied={isCopied}
-            setIsCopied={setIsCopied}
-          />
-          <ClearText inputText={inputText} setInputText={setInputText} />
+            {isMoreOptions ? "Close" : "More"}
+          </button>
         </div>
       </div>
     </div>
@@ -345,6 +381,75 @@ function OptionButton({
         {letter}
       </span>
     </button>
+  );
+}
+
+function MoreOptions({
+  settings,
+  setSettings,
+}: {
+  settings: any;
+  setSettings: (settings: any) => void;
+}) {
+  return (
+    <div className="block absolute h-full w-full justify-between px-4 top-0 left-0">
+      <div className="">
+        <h3 className="text-label tracking-widest">About</h3>
+        <p className="">
+          Fontcetera allows you to easily format your text with various Unicode
+          fonts and styles.
+        </p>
+      </div>
+      <div className="relative flex flex-col">
+        <h2 className="text-label tracking-widest mt-4">Settings</h2>
+        <ul className="flex flex-col w-3/4 ">
+          <li className="flex justify-between items-center">
+            <label htmlFor="save">Save input:</label>
+            <input
+              title="Save input"
+              id="save"
+              type="checkbox"
+              checked={settings.saveText}
+              onChange={() =>
+                setSettings({ ...settings, saveText: !settings.saveText })
+              }
+              className="accent-emerald-600"
+            />
+          </li>
+          <li className="flex justify-between items-center">
+            <label htmlFor="dark">Dark mode :</label>
+            {/* <input
+              title="Dark mode"
+              id="dark"
+              type="checkbox"
+              checked={settings.darkMode}
+              onChange={() =>
+                setSettings({ ...settings, darkMode: !settings.darkMode })
+              }
+            /> */}
+            <span className="block text-xs translate-x-1/3 tracking-tighter text-slate-600">
+              Coming soon
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div className="absolute bottom-0">
+        <ul className="text-[0.8rem] flex ">
+          <li className="justify-end">
+            <span>Created by </span>
+            <a
+              href="https://rbahi.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-emerald-600 hover:underline"
+            >
+              Youssef Rbahi
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   );
 }
 
