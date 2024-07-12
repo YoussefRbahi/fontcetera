@@ -423,7 +423,7 @@ function MoreOptions({}) {
       </div>
       <div className=" hidden flex-col">
         <h2 className="text-label tracking-widest mt-4">Settings</h2>
-        <ul className="flex flex-col w-3/4 ">
+        {/* <ul className="flex flex-col w-3/4 ">
           <li className="flex justify-between items-center">
             <label htmlFor="save">Save input:</label>
             <div className="block">
@@ -447,7 +447,7 @@ function MoreOptions({}) {
                 }`}
               >
                 no
-              </button> */}
+              </button>
             </div>
           </li>
           <li className="flex justify-between items-center">
@@ -460,12 +460,12 @@ function MoreOptions({}) {
               onChange={() =>
                 setSettings({ ...settings, darkMode: !settings.darkMode })
               }
-            /> */}
+            /> 
             <span className="block text-xs translate-x-1/3 tracking-tighter text-slate-600">
               Coming soon
             </span>
           </li>
-        </ul>
+        </ul> */}
       </div>
       <div className="relative flex flex-col">
         <h2 className="text-label tracking-widest text-emerald-600 mt-2">
