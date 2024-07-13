@@ -46,7 +46,7 @@ Note: Not all decorations are available for every font. The UI will disable opti
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/fontcetera.git
+   git clone https://github.com/youssefrbahi/fontcetera.git
    cd fontcetera
    ```
 
