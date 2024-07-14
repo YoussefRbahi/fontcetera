@@ -1,12 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Fontecetera - Unicode Text Formatter",
-  "short_name": "Fontecetera",
-  "description": "Fontecetera is a browser extension that allows you to use custom fonts on any website.",
+  "name": "Fontcetera - Unicode Text Formatter",
+  "short_name": "Fontcetera",
+  "description": "Fontcetera is a browser extension that allows you to use custom fonts on any website.",
   "author": {
     "email": "youssefrbahi@gmail.com"
   },
-  "version": "1.0.0",
+  "version": "1.0.1",
   "action": {
     "default_popup": "index.html",
     "default_icon": {
