@@ -253,7 +253,7 @@ function App() {
               !isMoreOptions && "invisible"
             }`}
           >
-            Version 1.0.0
+            Version 1.0.2
           </span>
           <div className={`flex w-2/3 gap-1 ${isMoreOptions && "invisible"}`}>
             <CopyToClipboard
