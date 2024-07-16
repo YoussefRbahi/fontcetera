@@ -96,7 +96,8 @@ This project uses the following libraries and resources:
 
 - [React](https://reactjs.org/): A JavaScript library for building user interfaces
 - [Vite](https://vitejs.dev/): Next Generation Frontend Tooling
-- [string-to-unicode-variant](https://github.com/Mottie/string-to-unicode-variant): A library to convert strings to unicode variants
+- [CRXJS](https://github.com/crxjs/chrome-extension-tools) A Vite plugin to help develop Chrome extensions
+- [toUnicodeVariant](https://github.com/davidkonrad/toUnicodeVariant): A JavaScript library to convert strings to unicode variants
 - [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework
 - [SVGR](https://react-svgr.com/): Transform SVGs into React components
 - [Font Awesome](https://fontawesome.com/): For the house and info circle icons
